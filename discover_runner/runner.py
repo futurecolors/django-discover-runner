@@ -9,6 +9,8 @@ from django.test.utils import setup_test_environment, teardown_test_environment
 from django.utils import unittest
 from django.utils.unittest import TestSuite, defaultTestLoader
 
+from django_nose import NoseTestSuiteRunner
+
 from .settings import TEST_DISCOVER_TOP_LEVEL, TEST_DISCOVER_PATTERN
 
 if not django.VERSION[:2] < (1, 6):
@@ -116,7 +118,7 @@ class DiscoverRunner(object):
         return setup_databases(self.verbosity, self.interactive, **kwargs)
 
     def run_suite(self, suite, **kwargs):
-        return unittest.TextTestRunner(
+        return NoseTestSuiteRunner(
             verbosity=self.verbosity,
             failfast=self.failfast,
         ).run(suite)
